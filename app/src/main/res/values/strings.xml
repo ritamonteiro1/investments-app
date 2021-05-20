@@ -12,4 +12,6 @@
     <string name="income">Rendimento total de</string>
     <string name="total_money_yield">R$ 88,69</string>
     <string name="simulate_again">SIMULAR NOVAMENTE</string>
+    <string name="enter_the_value">Preencha os campos corretamente!</string>
+    <string name="amount_initially_invested">Valor aplicado inialmente</string>
 </resources>
