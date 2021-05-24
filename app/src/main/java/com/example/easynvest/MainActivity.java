@@ -9,17 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import static com.example.easynvest.Utils.isEmptyField;
+import static com.example.easynvest.Utils.parseStringToDate;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
-    private TextInputLayout mainMoneyTextInputLayout, mainDueDataTextInputLayout, mainCdiPercentageTextInputLayout;
+    private TextInputLayout mainMoneyTextInputLayout, mainDueDataTextInputLayout,
+            mainCdiPercentageTextInputLayout;
     private EditText mainMoneyEditText, mainDueDataEditText, mainCdiPercentageEditText;
     private Button mainSimulateButton;
+    private Investment investment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,74 +30,42 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupSimulateButton() {
         mainSimulateButton.setOnClickListener(v -> {
-            boolean isValidMoney = isValidMoney();
-            boolean isValidDate = isValidDate();
-            boolean isValidPercentageCdi = isValidPercentageCdi();
+            boolean isEmptyCdiPercentage = isEmptyField(mainCdiPercentageTextInputLayout,
+                    mainMoneyEditText, this);
+            boolean isEmptyDueDatePercentage = isEmptyField(mainDueDataTextInputLayout,
+                    mainDueDataEditText, this);
+            boolean isEmptyMoneyPercentage = isEmptyField(mainMoneyTextInputLayout,
+                    mainMoneyEditText, this);
 
-            if (isValidDate && isValidMoney && isValidPercentageCdi) {
-//                moveToSimulationResultActivity();
-            }
+            if (isEmptyCdiPercentage || isEmptyDueDatePercentage || isEmptyMoneyPercentage)
+                return;
+
+            investment = new Investment(
+                    Float.parseFloat(mainCdiPercentageEditText.getText().toString()),
+                    parseStringToDate(mainDueDataEditText.getText().toString()),
+                    Float.parseFloat(mainMoneyEditText.getText().toString())
+            );
+
+            validateDueDate();
         });
     }
 
-    private boolean isValidPercentageCdi() {
-        String percentageCdi = mainCdiPercentageEditText.getText().toString();
-        if (percentageCdi.isEmpty()) {
-            mainCdiPercentageTextInputLayout.setError(getString(R.string.enter_value_error_message));
-            return false;
-        } else {
-            mainCdiPercentageTextInputLayout.setError(Constants.EMPTY);
-            return true;
-        }
-    }
-
-    private boolean isValidDate() {
-        return validateDateFormat() && validateFutureDate();
-    }
-
-    private boolean validateFutureDate() {
-        return true;
-    }
-
-    private boolean validateDateFormat() {
-        if (checkDateFormat(mainDueDataEditText.getText().toString())) {
-            mainDueDataTextInputLayout.setError(Constants.EMPTY);
-            return true;
-        } else {
-            mainDueDataTextInputLayout.setError(getString(R.string.enter_date_format_error_message));
-            return false;
-        }
-    }
-
-    private Boolean checkDateFormat(String dateAsString) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
-            sdf.setLenient(false);
-            sdf.parse(dateAsString);
-            return true;
-        } catch (ParseException ex) {
-            return false;
-        }
-    }
-
-    private boolean isValidMoney() {
-        String money = mainMoneyEditText.getText().toString();
-        if (money.isEmpty()) {
-            mainMoneyTextInputLayout.setError(getString(R.string.enter_value_error_message));
-            return false;
-        } else {
-            mainMoneyTextInputLayout.setError(Constants.EMPTY);
-            return true;
+    private void validateDueDate() {
+        switch (investment.isValidDueDate()) {
+            case INVALID_FORMAT:
+                mainDueDataTextInputLayout.setError(getString(R.string.enter_date_format_error_message));
+                break;
+            case INVALID_DUE_DATE:
+                mainDueDataTextInputLayout.setError(getString(R.string.enter_current_date_error_message));
+                break;
+            case VALID:
+                moveToSimulationResultActivity();
         }
     }
 
     private void moveToSimulationResultActivity() {
         Intent intent = new Intent(this, SimulationResultActivity.class);
-        intent.putExtra(Constants.INVESTED_MONEY,
-                Float.parseFloat(mainMoneyEditText.getText().toString()));
-        intent.putExtra(Constants.DUE_DATA, mainDueDataEditText.getText().toString());
-        intent.putExtra(Constants.PERCENTAGE_CDI,
-                mainCdiPercentageEditText.getText().toString());
+        intent.putExtra(Constants.INVESTED_MONEY, investment);
         startActivity(intent);
     }
 

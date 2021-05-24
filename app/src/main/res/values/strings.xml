@@ -13,8 +13,17 @@
     <string name="total_money_yield">R$ 88,69</string>
     <string name="simulate_again">SIMULAR NOVAMENTE</string>
     <string name="enter_value_error_message">Preencha o campo</string>
-    <string name="amount_initially_invested">Valor aplicado inicialmente</string>
-    <string name="simulation_information_result">R$ 1.000</string>
-    <string name="enter_date_format_error_message">Preencha com um formato válido ex: 10/10/2000</string>
+    <string name="simulation_information_result">Resultado</string>
+    <string name="enter_date_format_error_message">Preencha no formato válido ex: 10/10/2000</string>
     <string name="enter_money_value_error_message">Preencha o campo</string>
+    <string name="enter_current_date_error_message">Digite uma data posterior a atual</string>
+    <string name="informationType">Tipo de informação</string>
+    <string name="amount_initially_invested">Valor aplicado inicialmente</string>
+    <string name="gross_investment_amount">Valor bruto do investimento</string>
+    <string name="income_value">Valor do rendimento</string>
+    <string name="investment_income_tax">IR sobre o investimento</string>
+    <string name="net_investment_value">Valor líquido do investimento</string>
+    <string name="redemption_date">Data de resgate</string>
+    <string name="ir_percentage">(10%)</string>
+    <string name="string_concatenation_simulation_result">%s %s</string>
 </resources>
