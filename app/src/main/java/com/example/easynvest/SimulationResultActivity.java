@@ -4,15 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
+
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SimulationResultActivity extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class SimulationResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simulation_result);
         findViewsById();
+        DecimalFormat decimalFormat = new DecimalFormat(Constants.TWO_DECIMAL_PLACES);
         Investment investment = retrieveDataFromActivity();
         investmentResult = new InvestmentResult(investment);
         List<SimulationInformation> informationList = getSimulationInformation();
@@ -37,8 +40,8 @@ public class SimulationResultActivity extends AppCompatActivity {
     }
 
     private void showSummarySimulationResult() {
-        simulationResultSimulationResultTextView.setText(getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency), String.valueOf(investmentResult.grossValue())));
-        simulationMoneyYieldResultTextView.setText(getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency), String.valueOf(investmentResult.incomeValue())));
+        simulationResultSimulationResultTextView.setText(getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency), String.format(Locale.getDefault(),Constants.TWO_DECIMAL_PLACES, investmentResult.grossValue())));
+        simulationMoneyYieldResultTextView.setText(getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency), String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.incomeValue())));
     }
 
     private void setupRecyclerView(SimuationIformationAdapter simuationIformationAdapter) {
@@ -64,11 +67,11 @@ public class SimulationResultActivity extends AppCompatActivity {
 
     private List<SimulationInformation> getSimulationInformation() {
         List<SimulationInformation> informationList = new ArrayList<>();
-        informationList.add(new SimulationInformation(getString(R.string.amount_initially_invested), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.valueOf(investmentResult.getInvestment().getMoney()))));
-        informationList.add(new SimulationInformation(getString(R.string.gross_investment_amount), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.valueOf(investmentResult.grossValue()))));
-        informationList.add(new SimulationInformation(getString(R.string.income_value), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.valueOf(investmentResult.incomeValue()))));
-        informationList.add(new SimulationInformation(getString(R.string.investment_income_tax), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.valueOf(investmentResult.irValue()))));
-        informationList.add(new SimulationInformation(getString(R.string.net_investment_value), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.valueOf(investmentResult.netInvestmentValue()))));
+        informationList.add(new SimulationInformation(getString(R.string.amount_initially_invested), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.getInvestment().getMoney()))));
+        informationList.add(new SimulationInformation(getString(R.string.gross_investment_amount), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.grossValue()))));
+        informationList.add(new SimulationInformation(getString(R.string.income_value), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.incomeValue()))));
+        informationList.add(new SimulationInformation(getString(R.string.investment_income_tax), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.irValue()))));
+        informationList.add(new SimulationInformation(getString(R.string.net_investment_value), getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency),String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.netInvestmentValue()))));
         informationList.add(new SimulationInformation(getString(R.string.redemption_date), investmentResult.convertDateFormat(investmentResult.getInvestment().getDueDate())));
         return informationList;
     }
