@@ -43,7 +43,7 @@ public class SimulationResultActivity extends AppCompatActivity {
     }
 
     private void showSummarySimulationResult() {
-        simulationResultSimulationResultTextView.setText(NumberFormat.getCurrencyInstance().format(investmentResult.grossValue()));
+        simulationResultSimulationResultTextView.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(investmentResult.grossValue()));
         simulationMoneyYieldResultTextView.setText(getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency), String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.incomeValue())));
     }
 
