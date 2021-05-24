@@ -26,10 +26,6 @@ public class Investment implements Serializable {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
     public DateState isValidDueDate() {
         if (dueDate == null) {
             return DateState.INVALID_FORMAT;
