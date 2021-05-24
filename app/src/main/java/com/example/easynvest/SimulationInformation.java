@@ -18,7 +18,4 @@ public class SimulationInformation {
         return simulationResult;
     }
 
-    public void setSimulationResult(String simulationResult) {
-        this.simulationResult = simulationResult;
-    }
 }
