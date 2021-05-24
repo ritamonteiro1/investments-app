@@ -32,7 +32,6 @@ public class SimulationResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simulation_result);
         findViewsById();
-        DecimalFormat decimalFormat = new DecimalFormat(Constants.TWO_DECIMAL_PLACES);
         Investment investment = retrieveDataFromActivity();
         investmentResult = new InvestmentResult(investment);
         List<SimulationInformation> informationList = getSimulationInformation();

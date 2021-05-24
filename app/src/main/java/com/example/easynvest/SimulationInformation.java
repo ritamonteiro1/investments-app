@@ -13,9 +13,6 @@ public class SimulationInformation {
         return informationType;
     }
 
-    public void setInformationType(String informationType) {
-        this.informationType = informationType;
-    }
 
     public String getSimulationResult() {
         return simulationResult;
