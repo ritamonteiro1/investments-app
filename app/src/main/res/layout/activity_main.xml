@@ -46,7 +46,9 @@
                 android:gravity="center"
                 android:hint="@string/day_month_year"
                 android:inputType="date"
+                android:textAlignment="center"
                 android:textColor="@color/gray"
+                android:textColorHint="@color/black"
                 android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,6 +74,7 @@
                 android:inputType="numberDecimal"
                 android:textAlignment="center"
                 android:textColor="@color/gray"
+                android:textColorHint="@color/black"
                 android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +98,9 @@
                 android:gravity="center"
                 android:hint="@string/percentage_cdi"
                 android:inputType="number"
+                android:textAlignment="center"
                 android:textColor="@color/gray"
+                android:textColorHint="@color/black"
                 android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
