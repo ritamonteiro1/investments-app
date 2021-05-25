@@ -6,12 +6,12 @@
     <string name="real_currency">R$</string>
     <string name="day_month_year">dia/mês/ano</string>
     <string name="percentage_cdi">ex: 100%</string>
-    <string name="simulate_button">SIMULAR</string>
+    <string name="simulate_button">Simular</string>
     <string name="simulation">Resultado da simulação</string>
     <string name="simulation_result">R$ 1.088,69</string>
     <string name="income">Rendimento total de</string>
     <string name="total_money_yield">R$ 88,69</string>
-    <string name="simulate_again">SIMULAR NOVAMENTE</string>
+    <string name="simulate_again">Simular novamente</string>
     <string name="enter_value_error_message">Preencha o campo</string>
     <string name="simulation_information_result">Resultado</string>
     <string name="enter_date_format_error_message">Preencha no formato válido ex: 10/10/2000</string>
