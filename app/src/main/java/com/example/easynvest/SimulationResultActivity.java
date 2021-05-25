@@ -48,8 +48,6 @@ public class SimulationResultActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(SimuationIformationAdapter simuationIformationAdapter) {
-        simulationResultRecyclerView.addItemDecoration(new DividerItemDecoration(this,
-                LinearLayout.VERTICAL));
         simulationResultRecyclerView.setAdapter(simuationIformationAdapter);
     }
 
