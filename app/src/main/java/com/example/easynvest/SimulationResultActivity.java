@@ -43,8 +43,8 @@ public class SimulationResultActivity extends AppCompatActivity {
     }
 
     private void showSummarySimulationResult() {
-        simulationResultSimulationResultTextView.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(investmentResult.grossValue()));
-        simulationMoneyYieldResultTextView.setText(getString(R.string.string_concatenation_simulation_result, getString(R.string.real_currency), String.format(Locale.getDefault(), Constants.TWO_DECIMAL_PLACES, investmentResult.incomeValue())));
+        simulationResultSimulationResultTextView.setText(investmentResult.convertFloatToMoney(investmentResult.grossValue()));
+        simulationMoneyYieldResultTextView.setText(investmentResult.convertFloatToMoney(investmentResult.incomeValue()));
     }
 
     private void setupRecyclerView(SimuationIformationAdapter simuationIformationAdapter) {
@@ -91,21 +91,10 @@ public class SimulationResultActivity extends AppCompatActivity {
     }
 
     private void findSimulationResultValues() {
-        amountInitiallyInvested = getString(R.string.string_concatenation_simulation_result,
-                getString(R.string.real_currency), String.format(Locale.getDefault(),
-                        Constants.TWO_DECIMAL_PLACES, investmentResult.getInvestment().getMoney()));
-        grossInvestmentAmount = getString(R.string.string_concatenation_simulation_result,
-                getString(R.string.real_currency), String.format(Locale.getDefault(),
-                        Constants.TWO_DECIMAL_PLACES, investmentResult.grossValue()));
-        incomeValue = getString(R.string.string_concatenation_simulation_result,
-                getString(R.string.real_currency), String.format(Locale.getDefault(),
-                        Constants.TWO_DECIMAL_PLACES, investmentResult.incomeValue()));
-        investmentIncomeTax = getString(R.string.string_concatenation_simulation_result,
-                getString(R.string.real_currency), String.format(Locale.getDefault(),
-                        Constants.TWO_DECIMAL_PLACES, investmentResult.irValue()));
-        netInvestmentValue = getString(R.string.string_concatenation_simulation_result,
-                getString(R.string.real_currency), String.format(Locale.getDefault(),
-                        Constants.TWO_DECIMAL_PLACES,
-                        investmentResult.netInvestmentValue()));
+        amountInitiallyInvested = investmentResult.convertFloatToMoney(investmentResult.getInvestment().getMoney());
+        grossInvestmentAmount = investmentResult.convertFloatToMoney(investmentResult.grossValue());
+        incomeValue = investmentResult.convertFloatToMoney(investmentResult.incomeValue());
+        investmentIncomeTax = investmentResult.convertFloatToMoney(investmentResult.irValue());
+        netInvestmentValue = investmentResult.convertFloatToMoney(investmentResult.netInvestmentValue());
     }
 }
