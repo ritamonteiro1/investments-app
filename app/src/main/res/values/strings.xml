@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Easynvest</string>
+    <string name="app_name">Investimentos</string>
     <string name="money_invest">Quanto você gostaria de aplicar? *</string>
     <string name="due_date">Qual a data de vencimento do investimento? *</string>
     <string name="cdi_percentage">Qual o percentual do CDI do investimento? *</string>
