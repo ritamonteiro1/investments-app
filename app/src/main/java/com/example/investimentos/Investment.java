@@ -1,4 +1,4 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 public class Investment implements Serializable {
     private final float cdiPercentage;
     private final float money;
-    private Date dueDate;
+    private final Date dueDate;
 
     public Investment(float cdiPercentage, Date dueDate, float money) {
         this.cdiPercentage = cdiPercentage;

@@ -130,7 +130,7 @@
             android:background="@drawable/rounded_button"
             android:textAllCaps="false"
             android:backgroundTint="@color/gray_100"
-            android:text="@string/simulate_button"
+            android:text="@string/simulate_button_text"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

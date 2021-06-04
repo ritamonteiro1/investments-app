@@ -1,18 +1,23 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 import android.content.Context;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.example.easynvest.Constants.DATE_FORMAT;
+import static com.example.investimentos.Constants.DATE_FORMAT;
 
 public class Utils {
+    private static final NumberFormat numberFormat =
+            NumberFormat.getCurrencyInstance(Constants.LOCALE_BR);
+
     public static Date parseStringToDate(String value) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
@@ -33,5 +38,14 @@ public class Utils {
             textInputLayout.setError(Constants.EMPTY);
             return false;
         }
+    }
+
+    public static String convertDateFormat(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat(Constants.DATE_FORMAT, Constants.LOCALE_BR);
+        return dateFormat.format(date);
+    }
+
+    public static String convertFloatToMoney(float value) {
+        return numberFormat.format(value);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 import android.content.Context;
 

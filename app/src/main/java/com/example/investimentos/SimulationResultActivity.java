@@ -1,4 +1,4 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
+
+import static com.example.investimentos.Utils.convertDateFormat;
+import static com.example.investimentos.Utils.convertFloatToMoney;
 
 public class SimulationResultActivity extends AppCompatActivity {
 
@@ -34,19 +33,19 @@ public class SimulationResultActivity extends AppCompatActivity {
         Investment investment = retrieveDataFromActivity();
         investmentResult = new InvestmentResult(investment);
         List<SimulationInformation> informationList = getSimulationInformation();
-        SimuationIformationAdapter simuationIformationAdapter =
-                new SimuationIformationAdapter(informationList);
-        setupRecyclerView(simuationIformationAdapter);
+        SimulationInformationAdapter simulationInformationAdapter =
+                new SimulationInformationAdapter(informationList);
+        setupRecyclerView(simulationInformationAdapter);
         setupButton();
         showSummarySimulationResult();
     }
 
     private void showSummarySimulationResult() {
-        simulationResultSimulationResultTextView.setText(investmentResult.convertFloatToMoney(investmentResult.grossValue()));
-        simulationMoneyYieldResultTextView.setText(investmentResult.convertFloatToMoney(investmentResult.incomeValue()));
+        simulationResultSimulationResultTextView.setText(convertFloatToMoney(investmentResult.grossValue()));
+        simulationMoneyYieldResultTextView.setText(convertFloatToMoney(investmentResult.incomeValue()));
     }
 
-    private void setupRecyclerView(SimuationIformationAdapter simuationIformationAdapter) {
+    private void setupRecyclerView(SimulationInformationAdapter simuationIformationAdapter) {
         simulationResultRecyclerView.setAdapter(simuationIformationAdapter);
     }
 
@@ -83,15 +82,15 @@ public class SimulationResultActivity extends AppCompatActivity {
         informationList.add(new SimulationInformation(getString(R.string.net_investment_value),
                 netInvestmentValue));
         informationList.add(new SimulationInformation(getString(R.string.redemption_date),
-                investmentResult.convertDateFormat(investmentResult.getInvestment().getDueDate())));
+                convertDateFormat(investmentResult.getInvestment().getDueDate())));
         return informationList;
     }
 
     private void findSimulationResultValues() {
-        amountInitiallyInvested = investmentResult.convertFloatToMoney(investmentResult.getInvestment().getMoney());
-        grossInvestmentAmount = investmentResult.convertFloatToMoney(investmentResult.grossValue());
-        incomeValue = investmentResult.convertFloatToMoney(investmentResult.incomeValue());
-        investmentIncomeTax = investmentResult.convertFloatToMoney(investmentResult.irValue());
-        netInvestmentValue = investmentResult.convertFloatToMoney(investmentResult.netInvestmentValue());
+        amountInitiallyInvested = convertFloatToMoney(investmentResult.getInvestment().getMoney());
+        grossInvestmentAmount = convertFloatToMoney(investmentResult.grossValue());
+        incomeValue = convertFloatToMoney(investmentResult.incomeValue());
+        investmentIncomeTax = convertFloatToMoney(investmentResult.irValue());
+        netInvestmentValue = convertFloatToMoney(investmentResult.netInvestmentValue());
     }
 }

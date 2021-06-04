@@ -1,4 +1,4 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import static com.example.easynvest.Utils.isEmptyField;
-import static com.example.easynvest.Utils.parseStringToDate;
+import static com.example.investimentos.Utils.isEmptyField;
+import static com.example.investimentos.Utils.parseStringToDate;
 
 public class MainActivity extends AppCompatActivity {
 

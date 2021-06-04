@@ -1,4 +1,4 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 
 import android.view.LayoutInflater;
@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 
-public class SimuationIformationAdapter extends RecyclerView.Adapter<SimuationIformationAdapter.SimulationInformationViewHolder>{
+public class SimulationInformationAdapter extends RecyclerView.Adapter<SimulationInformationAdapter.SimulationInformationViewHolder>{
     private final List<SimulationInformation> informationList;
 
-    public SimuationIformationAdapter(List<SimulationInformation> informationList) {
+    public SimulationInformationAdapter(List<SimulationInformation> informationList) {
         this.informationList = informationList;
     }
 
     @NonNull
     @Override
-    public SimuationIformationAdapter.SimulationInformationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SimulationInformationAdapter.SimulationInformationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simulation_information,
                 parent, false);
         return new SimulationInformationViewHolder(listItem);

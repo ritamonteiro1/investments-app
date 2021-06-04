@@ -17,7 +17,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/simulation"
+            android:text="@string/simulation_title"
             android:textAlignment="center"
             android:textColor="@color/gray"
             android:textSize="18sp"
@@ -32,22 +32,22 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="32dp"
-            android:text="@string/simulation_result"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/simulationResultSimulationTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/simulationResultSimulationTextView"
+            tools:text="R$ 1.088,69" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/simulationResultRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/simulationResultIncomeConstraintLayout"
@@ -70,11 +70,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/simulationResultRecyclerView" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/simulationResultIncomeConstraintLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/simulationResultSimulationResultTextView">
@@ -85,21 +88,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/income"
                 android:textColor="@color/gray"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/simulationMoneyYieldResultTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/total_money_yield"
+                android:layout_marginStart="4dp"
+                tools:text="R$ 88,45"
                 android:textColor="@color/teal_700"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/simulationResultIncomeTextView"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="18sp" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

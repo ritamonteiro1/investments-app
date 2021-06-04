@@ -1,8 +1,8 @@
-package com.example.easynvest;
+package com.example.investimentos;
 
 public class SimulationInformation {
-    private String informationType;
-    private String simulationResult;
+    private final String informationType;
+    private final String simulationResult;
 
     public SimulationInformation(String informationType, String simulationResult) {
         this.informationType = informationType;
@@ -13,9 +13,7 @@ public class SimulationInformation {
         return informationType;
     }
 
-
     public String getSimulationResult() {
         return simulationResult;
     }
-
 }
