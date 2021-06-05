@@ -1,4 +1,4 @@
-package com.example.investimentos;
+package com.example.investimentos.constants;
 
 import java.util.Locale;
 

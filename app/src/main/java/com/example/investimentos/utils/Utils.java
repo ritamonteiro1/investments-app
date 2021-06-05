@@ -1,8 +1,10 @@
-package com.example.investimentos;
+package com.example.investimentos.utils;
 
 import android.content.Context;
 import android.widget.EditText;
 
+import com.example.investimentos.constants.Constants;
+import com.example.investimentos.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
@@ -12,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.example.investimentos.Constants.DATE_FORMAT;
+import static com.example.investimentos.constants.Constants.DATE_FORMAT;
 
 public class Utils {
     private static final NumberFormat numberFormat =

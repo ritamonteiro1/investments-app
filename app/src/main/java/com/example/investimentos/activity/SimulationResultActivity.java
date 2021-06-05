@@ -1,4 +1,4 @@
-package com.example.investimentos;
+package com.example.investimentos.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,11 +9,18 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.investimentos.constants.Constants;
+import com.example.investimentos.domains.Investment;
+import com.example.investimentos.domains.InvestmentResult;
+import com.example.investimentos.R;
+import com.example.investimentos.domains.SimulationInformation;
+import com.example.investimentos.adapter.SimulationInformationAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.investimentos.Utils.convertDateFormat;
-import static com.example.investimentos.Utils.convertFloatToMoney;
+import static com.example.investimentos.utils.Utils.convertDateFormat;
+import static com.example.investimentos.utils.Utils.convertFloatToMoney;
 
 public class SimulationResultActivity extends AppCompatActivity {
 
@@ -82,12 +89,12 @@ public class SimulationResultActivity extends AppCompatActivity {
         informationList.add(new SimulationInformation(getString(R.string.net_investment_value),
                 netInvestmentValue));
         informationList.add(new SimulationInformation(getString(R.string.redemption_date),
-                convertDateFormat(investmentResult.getInvestment().getDueDate())));
+                convertDateFormat(investmentResult.getInvestment().getMaturityDate())));
         return informationList;
     }
 
     private void findSimulationResultValues() {
-        amountInitiallyInvested = convertFloatToMoney(investmentResult.getInvestment().getMoney());
+        amountInitiallyInvested = convertFloatToMoney(investmentResult.getInvestment().getInvestedAmount());
         grossInvestmentAmount = convertFloatToMoney(investmentResult.grossValue());
         incomeValue = convertFloatToMoney(investmentResult.incomeValue());
         investmentIncomeTax = convertFloatToMoney(investmentResult.irValue());

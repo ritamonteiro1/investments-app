@@ -1,4 +1,4 @@
-package com.example.investimentos;
+package com.example.investimentos.domains;
 
 public class SimulationInformation {
     private final String informationType;

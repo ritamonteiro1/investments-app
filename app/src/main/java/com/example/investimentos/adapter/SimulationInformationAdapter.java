@@ -1,4 +1,4 @@
-package com.example.investimentos;
+package com.example.investimentos.adapter;
 
 
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.investimentos.R;
+import com.example.investimentos.domains.SimulationInformation;
 
 import java.util.List;
 

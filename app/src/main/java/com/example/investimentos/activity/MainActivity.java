@@ -1,4 +1,4 @@
-package com.example.investimentos;
+package com.example.investimentos.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,10 +7,16 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.investimentos.constants.Constants;
+import com.example.investimentos.domains.Investment;
+import com.example.investimentos.R;
 import com.google.android.material.textfield.TextInputLayout;
 
-import static com.example.investimentos.Utils.isEmptyField;
-import static com.example.investimentos.Utils.parseStringToDate;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.investimentos.utils.Utils.isEmptyField;
+import static com.example.investimentos.utils.Utils.parseStringToDate;
 
 public class MainActivity extends AppCompatActivity {
 
