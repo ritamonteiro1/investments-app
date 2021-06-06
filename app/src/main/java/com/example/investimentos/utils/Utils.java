@@ -12,7 +12,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.example.investimentos.constants.Constants.DATE_FORMAT;
 
@@ -22,7 +21,7 @@ public class Utils {
 
     public static Date parseStringToDate(String value) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Constants.LOCALE_BR);
             sdf.setLenient(false);
             return sdf.parse(value);
         } catch (ParseException ex) {
@@ -47,7 +46,7 @@ public class Utils {
         return dateFormat.format(date);
     }
 
-    public static String convertFloatToMoney(float value) {
+    public static String convertDoubleToMoney(double value) {
         return numberFormat.format(value);
     }
 }

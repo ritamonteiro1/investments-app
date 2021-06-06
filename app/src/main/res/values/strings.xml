@@ -21,4 +21,7 @@
     <string name="net_investment_value">Valor líquido do investimento</string>
     <string name="redemption_date">Data de resgate</string>
     <string name="string_concatenation_simulation_result">%s %s</string>
+    <string name="error_try_later">Ocorreu um erro, tente novamente mais tarde.</string>
+    <string name="error_connection_fail">Falha na conexão com a internet, tente novamente.</string>
+    <string name="alert_dialog_text">OK</string>
 </resources>

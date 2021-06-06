@@ -5,27 +5,20 @@ import com.example.investimentos.utils.DateState;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Investment implements Serializable {
-    private final float rate;
-    private final float investedAmount;
+public class InvestmentRequest implements Serializable {
+    private static final String INVESTMENT_TYPE = "CDI";
+    private final double rate;
+    private final double investedAmount;
     private final Date maturityDate;
+    private final boolean isTaxFree;
+    private final String index;
 
-    public Investment(float rate, Date maturityDate, float investedAmount) {
+    public InvestmentRequest(double rate, Date maturityDate, double investedAmount) {
         this.rate = rate;
         this.maturityDate = maturityDate;
         this.investedAmount = investedAmount;
-    }
-
-    public float getRate() {
-        return rate;
-    }
-
-    public float getInvestedAmount() {
-        return investedAmount;
-    }
-
-    public Date getMaturityDate() {
-        return maturityDate;
+        this.isTaxFree = false;
+        this.index = INVESTMENT_TYPE;
     }
 
     public DateState isValidDueDate() {
@@ -40,6 +33,4 @@ public class Investment implements Serializable {
             return DateState.INVALID_DUE_DATE;
         }
     }
-
-
 }

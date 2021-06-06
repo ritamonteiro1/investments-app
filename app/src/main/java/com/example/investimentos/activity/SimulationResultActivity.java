@@ -1,26 +1,34 @@
 package com.example.investimentos.activity;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import android.os.Bundle;
-
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.example.investimentos.constants.Constants;
-import com.example.investimentos.domains.Investment;
-import com.example.investimentos.domains.InvestmentResult;
 import com.example.investimentos.R;
-import com.example.investimentos.domains.SimulationInformation;
 import com.example.investimentos.adapter.SimulationInformationAdapter;
+import com.example.investimentos.api.Api;
+import com.example.investimentos.api.DataService;
+import com.example.investimentos.domains.InvestmentResponse;
+import com.example.investimentos.domains.SimulationInformation;
+import com.example.investimentos.utils.Utils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import static com.example.investimentos.utils.Utils.convertDateFormat;
-import static com.example.investimentos.utils.Utils.convertFloatToMoney;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.investimentos.utils.Utils.convertDoubleToMoney;
 
 public class SimulationResultActivity extends AppCompatActivity {
 
@@ -28,41 +36,72 @@ public class SimulationResultActivity extends AppCompatActivity {
     private TextView simulationResultSimulationResultTextView;
     private TextView simulationMoneyYieldResultTextView;
     private Button simulationResultSimulateAgainButton;
-    private InvestmentResult investmentResult;
-    private String amountInitiallyInvested, grossInvestmentAmount, incomeValue,
-            investmentIncomeTax, netInvestmentValue;
+    private ProgressBar simulationResultProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simulation_result);
         findViewsById();
-        Investment investment = retrieveDataFromActivity();
-        investmentResult = new InvestmentResult(investment);
-        List<SimulationInformation> informationList = getSimulationInformation();
-        SimulationInformationAdapter simulationInformationAdapter =
-                new SimulationInformationAdapter(informationList);
-        setupRecyclerView(simulationInformationAdapter);
+//        InvestmentRequest investmentRequest = retrieveDataFromActivity();
         setupButton();
-        showSummarySimulationResult();
+        DataService dataService = Api.setupRetrofit().create(DataService.class);
+        Call<InvestmentResponse> call = dataService.recoverInvestmentResult();
+        call.enqueue(new Callback<InvestmentResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<InvestmentResponse> call,
+                                   @NotNull Response<InvestmentResponse> response) {
+                simulationResultProgressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null) {
+                    InvestmentResponse investmentResponse = response.body();
+                    showSummarySimulationResult(investmentResponse.getInvestmentParameterResponse().
+                            getInvestedAmount(), investmentResponse.getGrossAmountProfit());
+
+                    List<SimulationInformation> informationList =
+                            getSimulationInformation(investmentResponse);
+                    SimulationInformationAdapter simulationInformationAdapter =
+                            new SimulationInformationAdapter(informationList);
+                    setupRecyclerView(simulationInformationAdapter);
+                } else {
+                    createErrorDialog(getString(R.string.error_try_later));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<InvestmentResponse> call, @NotNull Throwable t) {
+                simulationResultProgressBar.setVisibility(View.GONE);
+                createErrorDialog(getString(R.string.error_connection_fail));
+            }
+        });
     }
 
-    private void showSummarySimulationResult() {
-        simulationResultSimulationResultTextView.setText(convertFloatToMoney(investmentResult.grossValue()));
-        simulationMoneyYieldResultTextView.setText(convertFloatToMoney(investmentResult.incomeValue()));
+    private void createErrorDialog(String message) {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.alert_dialog_text),
+                        (dialog, which) -> finish());
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
-    private void setupRecyclerView(SimulationInformationAdapter simuationIformationAdapter) {
-        simulationResultRecyclerView.setAdapter(simuationIformationAdapter);
+    private void showSummarySimulationResult(double investedAmount, double incomeValue) {
+        simulationResultSimulationResultTextView.setText(convertDoubleToMoney(investedAmount));
+        simulationMoneyYieldResultTextView.setText(convertDoubleToMoney(incomeValue));
+    }
+
+    private void setupRecyclerView(SimulationInformationAdapter simulationInformationAdapter) {
+        simulationResultRecyclerView.setAdapter(simulationInformationAdapter);
     }
 
     private void setupButton() {
         simulationResultSimulateAgainButton.setOnClickListener(v -> finish());
     }
 
-    private Investment retrieveDataFromActivity() {
-        return (Investment) getIntent().getSerializableExtra(Constants.INVESTED_MONEY);
-    }
+//    private InvestmentRequest retrieveDataFromActivity() {
+//        return (InvestmentRequest) getIntent().getSerializableExtra(Constants.INVESTED_MONEY);
+//    }
 
     private void findViewsById() {
         simulationResultSimulateAgainButton =
@@ -71,33 +110,34 @@ public class SimulationResultActivity extends AppCompatActivity {
         simulationResultSimulationResultTextView =
                 findViewById(R.id.simulationResultSimulationResultTextView);
         simulationResultRecyclerView = findViewById(R.id.simulationResultRecyclerView);
-
+        simulationResultProgressBar = findViewById(R.id.simulationResultProgressBar);
     }
 
-    private List<SimulationInformation> getSimulationInformation() {
-        findSimulationResultValues();
+    private List<SimulationInformation> getSimulationInformation(InvestmentResponse investmentResponse) {
 
         List<SimulationInformation> informationList = new ArrayList<>();
-        informationList.add(new SimulationInformation(getString(R.string.amount_initially_invested),
-                amountInitiallyInvested));
-        informationList.add(new SimulationInformation(getString(R.string.gross_investment_amount)
-                , grossInvestmentAmount));
-        informationList.add(new SimulationInformation(getString(R.string.income_value),
-                incomeValue));
-        informationList.add(new SimulationInformation(getString(R.string.investment_income_tax),
-                investmentIncomeTax));
-        informationList.add(new SimulationInformation(getString(R.string.net_investment_value),
-                netInvestmentValue));
-        informationList.add(new SimulationInformation(getString(R.string.redemption_date),
-                convertDateFormat(investmentResult.getInvestment().getMaturityDate())));
-        return informationList;
-    }
 
-    private void findSimulationResultValues() {
-        amountInitiallyInvested = convertFloatToMoney(investmentResult.getInvestment().getInvestedAmount());
-        grossInvestmentAmount = convertFloatToMoney(investmentResult.grossValue());
-        incomeValue = convertFloatToMoney(investmentResult.incomeValue());
-        investmentIncomeTax = convertFloatToMoney(investmentResult.irValue());
-        netInvestmentValue = convertFloatToMoney(investmentResult.netInvestmentValue());
+        String investedAmount =
+                convertDoubleToMoney(investmentResponse.getInvestmentParameterResponse().getInvestedAmount());
+        String grossAmount = convertDoubleToMoney(investmentResponse.getGrossAmount());
+        String netAmount = convertDoubleToMoney(investmentResponse.getNetAmount());
+        String rate =
+                convertDoubleToMoney(investmentResponse.getInvestmentParameterResponse().getRate());
+        String netAmountProfit = convertDoubleToMoney(investmentResponse.getNetAmountProfit());
+        Date maturityDate = investmentResponse.getInvestmentParameterResponse().getMaturityDate();
+
+        informationList.add(new SimulationInformation(getString(R.string.amount_initially_invested),
+                investedAmount));
+        informationList.add(new SimulationInformation(getString(R.string.gross_investment_amount)
+                , grossAmount));
+        informationList.add(new SimulationInformation(getString(R.string.income_value),
+                netAmount));
+        informationList.add(new SimulationInformation(getString(R.string.investment_income_tax),
+                rate));
+        informationList.add(new SimulationInformation(getString(R.string.net_investment_value),
+                netAmountProfit));
+        informationList.add(new SimulationInformation(getString(R.string.redemption_date),
+                Utils.convertDateFormat(maturityDate)));
+        return informationList;
     }
 }

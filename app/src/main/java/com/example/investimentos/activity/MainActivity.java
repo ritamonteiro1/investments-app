@@ -8,12 +8,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.investimentos.constants.Constants;
-import com.example.investimentos.domains.Investment;
+import com.example.investimentos.domains.InvestmentRequest;
 import com.example.investimentos.R;
 import com.google.android.material.textfield.TextInputLayout;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.investimentos.utils.Utils.isEmptyField;
 import static com.example.investimentos.utils.Utils.parseStringToDate;
@@ -24,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             mainCdiPercentageTextInputLayout;
     private EditText mainMoneyEditText, mainDueDataEditText, mainCdiPercentageEditText;
     private Button mainSimulateButton;
-    private Investment investment;
+    private InvestmentRequest investmentRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             if (isEmptyCdiPercentage || isEmptyDueDatePercentage || isEmptyMoneyPercentage)
                 return;
 
-            investment = new Investment(
+            investmentRequest = new InvestmentRequest(
                     Float.parseFloat(mainCdiPercentageEditText.getText().toString()),
                     parseStringToDate(mainDueDataEditText.getText().toString()),
                     Float.parseFloat(mainMoneyEditText.getText().toString())
@@ -57,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void validateDueDate() {
-        switch (investment.isValidDueDate()) {
+        switch (investmentRequest.isValidDueDate()) {
             case INVALID_FORMAT:
                 mainDueDataTextInputLayout.setError(getString(R.string.enter_date_format_error_message));
                 break;
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void moveToSimulationResultActivity() {
         Intent intent = new Intent(this, SimulationResultActivity.class);
-        intent.putExtra(Constants.INVESTED_MONEY, investment);
+        intent.putExtra(Constants.INVESTED_MONEY, investmentRequest);
         startActivity(intent);
     }
 

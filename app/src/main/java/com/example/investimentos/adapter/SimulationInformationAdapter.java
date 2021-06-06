@@ -15,7 +15,7 @@ import com.example.investimentos.domains.SimulationInformation;
 import java.util.List;
 
 
-public class SimulationInformationAdapter extends RecyclerView.Adapter<SimulationInformationAdapter.SimulationInformationViewHolder>{
+public class SimulationInformationAdapter extends RecyclerView.Adapter<SimulationInformationAdapter.SimulationInformationViewHolder> {
     private final List<SimulationInformation> informationList;
 
     public SimulationInformationAdapter(List<SimulationInformation> informationList) {
@@ -25,8 +25,9 @@ public class SimulationInformationAdapter extends RecyclerView.Adapter<Simulatio
     @NonNull
     @Override
     public SimulationInformationAdapter.SimulationInformationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simulation_information,
-                parent, false);
+        View listItem =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.item_simulation_information,
+                        parent, false);
         return new SimulationInformationViewHolder(listItem);
     }
 
@@ -40,14 +41,16 @@ public class SimulationInformationAdapter extends RecyclerView.Adapter<Simulatio
         return informationList.size();
     }
 
-    public static class SimulationInformationViewHolder extends RecyclerView.ViewHolder{
-            private final TextView itemSimulationInformationTypeTextView;
-            private final TextView itemSimulationInformationSimulationResultTextView;
+    public static class SimulationInformationViewHolder extends RecyclerView.ViewHolder {
+        private final TextView itemSimulationInformationTypeTextView;
+        private final TextView itemSimulationInformationSimulationResultTextView;
 
         public SimulationInformationViewHolder(View itemView) {
             super(itemView);
-            itemSimulationInformationSimulationResultTextView = itemView.findViewById(R.id.itemSimulationInformationSimulationResultTextView);
-            itemSimulationInformationTypeTextView = itemView.findViewById(R.id.itemSimulationInformationTypeTextView);
+            itemSimulationInformationSimulationResultTextView =
+                    itemView.findViewById(R.id.itemSimulationInformationSimulationResultTextView);
+            itemSimulationInformationTypeTextView =
+                    itemView.findViewById(R.id.itemSimulationInformationTypeTextView);
         }
 
         public void bind(SimulationInformation simulationInformation) {
