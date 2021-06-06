@@ -47,21 +47,17 @@ public class SimulationResultActivity extends AppCompatActivity {
         setupButton();
         DataService dataService = Api.setupRetrofit().create(DataService.class);
         Call<InvestmentResponse> call = dataService.recoverInvestmentResult();
+        getInvestmentResult(call);
+    }
+
+    private void getInvestmentResult(Call<InvestmentResponse> call) {
         call.enqueue(new Callback<InvestmentResponse>() {
             @Override
             public void onResponse(@NotNull Call<InvestmentResponse> call,
                                    @NotNull Response<InvestmentResponse> response) {
                 simulationResultProgressBar.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
-                    InvestmentResponse investmentResponse = response.body();
-                    showSummarySimulationResult(investmentResponse.getInvestmentParameterResponse().
-                            getInvestedAmount(), investmentResponse.getGrossAmountProfit());
-
-                    List<SimulationInformation> informationList =
-                            getSimulationInformation(investmentResponse);
-                    SimulationInformationAdapter simulationInformationAdapter =
-                            new SimulationInformationAdapter(informationList);
-                    setupRecyclerView(simulationInformationAdapter);
+                    getSuccessfullyInvestmentResult(response);
                 } else {
                     createErrorDialog(getString(R.string.error_try_later));
                 }
@@ -73,6 +69,20 @@ public class SimulationResultActivity extends AppCompatActivity {
                 createErrorDialog(getString(R.string.error_connection_fail));
             }
         });
+    }
+
+    private void getSuccessfullyInvestmentResult(@NotNull Response<InvestmentResponse> response) {
+        InvestmentResponse investmentResponse = response.body();
+        if (investmentResponse != null) {
+            showSummarySimulationResult(investmentResponse.getInvestmentParameterResponse().
+                    getInvestedAmount(), investmentResponse.getGrossAmountProfit());
+
+            List<SimulationInformation> informationList =
+                    getSimulationInformation(investmentResponse);
+            SimulationInformationAdapter simulationInformationAdapter =
+                    new SimulationInformationAdapter(informationList);
+            setupRecyclerView(simulationInformationAdapter);
+        }
     }
 
     private void createErrorDialog(String message) {
