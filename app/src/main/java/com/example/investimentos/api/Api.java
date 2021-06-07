@@ -9,8 +9,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Api {
-    private static final String url = "https://run.mocky.io/v3/";
-    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final String BASE_URL = "https://run.mocky.io/v3/";
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
     public static Retrofit setupRetrofit() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -24,7 +24,7 @@ public class Api {
                 .create();
 
         return new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(
                         gson
